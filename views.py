@@ -28,6 +28,6 @@ def new_confirm(request):
             rule_url=request.POST.get('rule_url'),
             rt_screen_name=request.POST.get('rt_screen_name'),
             collection_url=request.POST.get('collection_url'),
-            langs=request.POST.get('langs').split(','),
+            langs=request.POST.getlist('langs'),
         )
         return render(request, 'onedraw_links/new-confirm.html', {'onedraw': onedraw})
