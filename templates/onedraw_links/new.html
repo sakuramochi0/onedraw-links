@@ -1,0 +1,74 @@
+{% extends 'onedraw_links/base.html' %}
+{% load onedraw_links_extras %}
+{% block head %}
+{% endblock %}
+{% block body %}
+{% include 'onedraw_links/header.html' %}
+<div class="container py-5">
+    {% if waring_message %}
+    <div class="alert alert-warning">
+        {{ waring_message }}
+    </div>
+    {% endif %}
+	<h1>新規ワンドロ登録</h1>
+    <p>以下のフォームに必要な情報を入力して、ボタンを押してください。</p>
+
+    <!-- form -->
+    <form action="{% url 'onedraw_links:new_confirm' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    {{ formset.name|label:'主催アカウントのユーザー名' }}
+                    {{ formset.name|addclass:"form-control" }}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    {{ formset.screen_name|label:'@ユーザー名' }}
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        {{ formset.screen_name|addclass:"form-control" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ formset.work|label:'作品名' }}
+                    {{ formset.work|addclass:"form-control" }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ formset.genre|label:'ジャンル (作品内の CP 名など。指定がない場合は「オールキャラ」)' }}
+                    {{ formset.genre|addclass:"form-control" }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ formset.rule_url|label:'ルールや注意事項が書かれたページの URL' }}
+            {{ formset.rule_url|addclass:"form-control" }}
+        </div>
+        <div class="form-group">
+            {{ formset.rt_screen_name|label:'RT 用アカウントの @ユーザー名' }}
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                {{ formset.rt_screen_name|addclass:"form-control" }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ formset.collection_url|label:'ツイートのまとめページの URL' }}
+            {{ formset.collection_url|addclass:"form-control" }}
+        </div>
+        {{ formset.langs|label:'対応言語' }}
+        <div class="form-check form-check-inline">
+            {% for lang in formset.langs %}
+            {{ lang }}
+            {% endfor %}
+        </div>
+        <button class="btn btn-secondary" type="submit">登録確認ページへ</button>
+    </form>
+</div>
+{% endblock %}

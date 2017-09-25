@@ -1,0 +1,13 @@
+{% extends 'onedraw_links/base.html' %}
+{% load onedraw_links_extras %}
+{% block head %}
+{% endblock %}
+{% block body %}
+{% include 'onedraw_links/header.html' %}
+<div class="container py-5">
+    {% if waring_message %}
+    <div class="alert alert-warning">
+        {{ waring_message }}
+    </div>
+    {% endif %}
+{% endblock %}

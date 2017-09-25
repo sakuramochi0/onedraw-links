@@ -1,0 +1,105 @@
+{% extends 'onedraw_links/base.html' %}
+{% block head %}
+<script>
+ $(function () {
+     $('[data-toggle="tooltip"]').tooltip()
+ })
+</script>
+<style>
+ [data-toggle="tooltip"] {
+     text-decoration: underline dashed;
+ }
+</style>
+{% endblock %}
+{% block body %}
+{% include 'onedraw_links/header.html' %}
+<div class="container-fluid p-5">
+    {% include 'onedraw_links/tweet-btn.html' %}
+
+	<p class="mb-3">
+	    深夜の真剣お絵描き60分一本勝負 (通称:<strong>ワンドロ</strong>)とは、Twitter 上で行われているイベントで、主催アカウントが発表したお題に沿ったイラストを60分間で描くというものです。イラストだけでなく SS を投稿できるものもあります (SS 専用の企画は<span title="1時間ライティング" data-toggle="tooltip">ワンライ</span>と呼ばれます) 。
+	</p>
+
+	<h2>ワンドロ一覧</h2>
+	<table class="table table-sm table-striped table-responsive">
+	    <thead>
+            <tr class="row">
+		        <th class="align-middle col-3">主催アカウント</th>
+		        <th class="align-middle col-3">対象作品</th>
+		        <th class="align-middle col-1">ジャンル</th>
+                <th class="align-middle col-5 row">
+                    <span class="col-2">ルール</span>
+                    <span class="col-2">RT</span>
+                    <span class="col-2">まとめ</span>
+                    <span class="col-4">対応言語</span>
+                    <span class="col-2">活動中</span>
+                </th>
+                
+            </tr>
+	    </thead>
+	    <tbody>
+		    {% for onedraw in onedraws %}
+		    <tr class="row">
+                <!-- icon -->
+                <td class="align-middle col-3">
+                    <a href="https://twitter.com/{{ onedraw.screen_name }}">
+                        <div class="media">
+                            <img class="d-flex mr-3" style="height: 3rem;" alt=""
+                                 src="http://furyu.nazo.cc/twicon/{{ onedraw.screen_name }}/bigger"/>
+                            <div class="media-body">
+                                {{ onedraw.name }}
+                                <small class="text-mute">
+                                    @{{ onedraw.screen_name }}
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                <!-- work -->
+                <td class="align-middle col-3">
+                    {{ onedraw.work }}
+                </td>
+                <!-- genre -->
+                <td class="align-middle col-1">
+                    {{ onedraw.genre }}
+                </td>
+                <td class="align-middle col-5 row">
+                    <!-- rule -->
+                    <span class="col-2">
+                        {% if onedraw.rule_url %}
+                        <a href="{{ onedraw.rule_url }}">
+                            <i class="fa fa-link"></i>
+                        </a>
+                        {% endif %}
+                    </span>
+		            <!-- RT account -->
+                    <span class="align-middle col-2">
+                    {% if onedraw.rt_screen_name %}
+                    <a href="https://twitter.com/{{ onedraw.rt_screen_name }}">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    </span>
+		            <!-- collection page -->
+                    <span class="align-middle col-2">
+		                {% if onedraw.collection_url %}
+                        <a href="{{ onedraw.collection_url }}">
+                            ■
+                        </a>
+                        {% endif %}
+                    </span>
+                    <!-- langs -->
+                    <span class="align-middle col-4">
+                        {{ onedraw.langs }}
+                    </span>
+		            <!-- active? -->
+                    <span class="align-middle col-2">
+                        {% if onedraw.active %}○{% else %}×{% endif %}
+                    </span>
+                </td>
+		    </tr>
+		    {% endfor %}
+	    </tbody>
+	</table>
+</div>
+{% endblock %}
